@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - app-network
+
+  app1:
+    image: mcr.microsoft.com/dotnet/sdk:8.0
+    working_dir: /app
+    volumes:
+      - ../Valuator:/app
+    environment:
+      - ASPNETCORE_URLS=http://0.0.0.0:5001
+    command: dotnet run
+    networks:
+      - app-network
+
+  app2:
+    image: mcr.microsoft.com/dotnet/sdk:8.0
+    working_dir: /app
+    volumes:
+      - ../Valuator:/app
+    environment:
+      - ASPNETCORE_URLS=http://0.0.0.0:5002
+    command: dotnet run
+    networks:
+      - app-network
+
+  app3:
+    image: mcr.microsoft.com/dotnet/sdk:8.0
+    working_dir: /app
+    volumes:
+      - ../Valuator:/app
+    environment:
+      - ASPNETCORE_URLS=http://0.0.0.0:5003
+    command: dotnet run
+    networks:
+      - app-network  
+   
+  app4:
+    image: mcr.microsoft.com/dotnet/sdk:8.0
+    working_dir: /app
+    volumes:
+      - ../Valuator:/app
+    environment:
+      - ASPNETCORE_URLS=http://0.0.0.0:5004
+    command: dotnet run
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
